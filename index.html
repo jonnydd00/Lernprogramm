@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lernprogramm PWA</title>
+
+  <!-- PWA: manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Dein CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Kopfbereich -->
+  <header class="site-header">
+    <h1>Mein Lernprogramm</h1>
+  </header>
+
+  <!-- Hauptbereich: Hier kommt das Quiz -->
+  <main class="container">
+    <section id="quiz">
+      <!-- Platzhalter für Frage -->
+      <div id="question" class="quiz-question"></div>
+
+      <!-- Platzhalter für Antworten -->
+      <div id="answers" class="flex flex--center"></div>
+
+      <!-- Platzhalter für Fortschrittsbalken -->
+      <div class="progressbar">
+        <div class="progressbar__fill" style="width: 0%;"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Fußbereich -->
+  <footer class="site-footer">
+    &copy; HTW Dresden
+  </footer>
+
+  <!-- Dein JavaScript -->
+  <script src="js/app.js" type="module"></script>
+</body>
+</html>
