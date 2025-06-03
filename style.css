@@ -5,13 +5,6 @@
   --font-base: 16px;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-
 /* 2. Globales Reset & Basis-Typografie */
 * {
   margin: 0;
@@ -24,9 +17,6 @@ body {
   line-height: 1.5;
   background: #fafafa;
   color: #333;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 /* 3. Container für zentrierten Inhalt */
@@ -34,12 +24,6 @@ body {
   max-width: 800px;
   margin: 0 auto;
   padding: var(--spacing);
-  flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Optional: Inhalt vertikal zentrieren */
-  align-items: center;     /* Optional: Inhalt horizontal zentrieren */
-  width: 100%;
 }
 
 /* 4. Header & Footer */
@@ -75,7 +59,7 @@ body {
   transition: width 0.3s ease;
 }
 
-/* 7. Buttons */
+/* 7. Antwort-Buttons */
 button.answer-btn {
   background: var(--primary);
   color: #fff;
@@ -89,15 +73,50 @@ button.answer-btn:hover {
   opacity: 0.9;
 }
 
-/* 8. Quiz-Frage */
+/* 8. Fortschritts-Feedback (richtig/falsch) */
+.correct {
+  background-color: #d4edda;
+}
+.wrong {
+  background-color: #f8d7da;
+}
+
+/* 9. Quiz-Frage */
 .quiz-question {
   font-size: 1.25rem;
   margin-bottom: var(--spacing);
 }
 
-/* 9. Responsive Anpassung */
+/* 10. Kategorie-Buttons */
+button.category-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 0.75em 1.5em;
+  margin: 0.5em;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button.category-btn:hover {
+  opacity: 0.9;
+}
+
+/* 11. Verstecken per Klasse */
+.hidden {
+  display: none;
+}
+
+/* 12. Responsive Anpassung */
 @media (max-width: 600px) {
-  .container { padding: 0.5rem; }
-  .quiz-question { font-size: 1.1rem; }
-  button.answer-btn { flex: 1 1 100%; }
+  .container {
+    padding: 0.5rem;
+  }
+  .quiz-question {
+    font-size: 1.1rem;
+  }
+  button.answer-btn,
+  button.category-btn {
+    flex: 1 1 100%;
+  }
 }

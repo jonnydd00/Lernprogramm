@@ -5,40 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lernprogramm PWA</title>
 
-  <!-- PWA: manifest -->
-  <link rel="manifest" href="manifest.json">
+  <!-- Falls du später eine manifest.json nutzt, muss dieser Link stimmen. -->
+  <!-- <link rel="manifest" href="manifest.json" /> -->
 
-  <!-- Dein CSS -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Kopfbereich -->
   <header class="site-header">
     <h1>Mein Lernprogramm</h1>
   </header>
 
-  <!-- Hauptbereich: Hier kommt das Quiz -->
   <main class="container">
-    <section id="quiz">
-      <!-- Platzhalter für Frage -->
+    <!-- Kategorie-Auswahl-Screen -->
+    <section id="category-selection">
+      <h2>Wähle eine Kategorie</h2>
+      <div id="categories" class="flex flex--center">
+        <button class="category-btn" data-cat="mathe">Mathematik</button>
+        <button class="category-btn" data-cat="web">Webtechnologien</button>
+        <button class="category-btn" data-cat="allgemein">Allgemeinwissen</button>
+      </div>
+    </section>
+
+    <!-- Quiz-Screen (anfangs versteckt) -->
+    <section id="quiz" class="hidden">
       <div id="question" class="quiz-question"></div>
-
-      <!-- Platzhalter für Antworten -->
       <div id="answers" class="flex flex--center"></div>
-
-      <!-- Platzhalter für Fortschrittsbalken -->
       <div class="progressbar">
         <div class="progressbar__fill" style="width: 0%;"></div>
       </div>
     </section>
   </main>
 
-  <!-- Fußbereich -->
   <footer class="site-footer">
     &copy; HTW Dresden
   </footer>
 
-  <!-- Dein JavaScript -->
   <script src="js/app.js" type="module"></script>
 </body>
 </html>
