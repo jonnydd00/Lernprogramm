@@ -1,95 +1,104 @@
 export class QuizView {
   constructor(root) {
-    // Root verweist auf das <main class="container">
-    this.root         = root;
+    this.root             = root;
+    this.catSection       = document.getElementById('category-selection');
+    this.categoriesEl     = document.getElementById('categories');
 
-    // 1. Kategorie-Auswahl-Section und Buttons
-    this.catSection   = document.getElementById('category-selection');
-    this.categoriesEl = document.getElementById('categories');
+    this.quizSection      = document.getElementById('quiz');
+    this.qEl              = this.quizSection.querySelector('#question');
+    this.answersEl        = this.quizSection.querySelector('#answers');
+    this.progressEl       = this.quizSection.querySelector('.progressbar__fill');
 
-    // 2. Quiz-Section (anfangs versteckt)
-    this.quizSection  = document.getElementById('quiz');
-    this.qEl          = this.quizSection.querySelector('#question');
-    this.answersEl    = this.quizSection.querySelector('#answers');
-    this.progressEl   = this.quizSection.querySelector('.progressbar__fill');
+    this.summarySection   = document.getElementById('summary');
+    this.summaryContent   = document.getElementById('summary-content');
+    this.backBtn          = this.summarySection.querySelector('#back-btn');
   }
 
-  /**
-   * Binde Klick-Handler auf Kategorie-Buttons.
-   * callback erhält den Kategorienamen ("mathe", "web", "allgemein").
-   */
+  /** Kategorie-Auswahl binden */
   bindCategorySelection(callback) {
     this.categoriesEl.addEventListener('click', e => {
       if (e.target.matches('.category-btn')) {
-        const category = e.target.getAttribute('data-cat');
-        callback(category);
+        callback(e.target.dataset.cat);
       }
     });
   }
 
-  /**
-   * Blendet die Kategorie-Auswahl aus und zeigt den Quiz-Bereich an.
-   */
+  /** Antwort-Buttons binden */
+  bindAnswer(callback) {
+    this.answersEl.addEventListener('click', e => {
+      if (e.target.matches('.answer-btn')) {
+        callback(e.target.textContent);
+      }
+    });
+  }
+
+  /** Zurück-Button binden */
+  bindBack(callback) {
+    if (!this.backBtn) return;
+      this.backBtn.addEventListener('click', () => callback());
+    
+  }
+
+  /** Anzeige Kategorie-Auswahl */
+  showCategorySelection() {
+    this.quizSection.classList.add('hidden');
+    this.summarySection.classList.add('hidden');
+    this.catSection.classList.remove('hidden');
+  }
+
+  /** Anzeige Quiz-Screen */
   showQuizScreen() {
     this.catSection.classList.add('hidden');
+    this.summarySection.classList.add('hidden');
     this.quizSection.classList.remove('hidden');
   }
 
-  /**
-   * Binde Klick-Handler auf Antwort-Buttons.
-   */
-  bindAnswer(handler) {
-    this.answersEl.addEventListener('click', e => {
-      if (e.target.matches('.answer-btn')) {
-        handler(e.target.textContent);
-      }
-    });
-  }
-
-  /**
-   * Zeigt eine Frage an: setzt Frage-Text und generiert vier Antwort-Buttons.
-   * @param {{a: string, l: string[]}} q - Ein Frage-Objekt mit Feld a (Aufgabe) und l (Antworten)
-   */
+  /** Lokale Frage anzeigen */
   showQuestion(q) {
-    this.qEl.textContent = `Was ist die Lösung aus: ${q.a} ?`;
+    this.qEl.textContent = ` ${q.a}`;
     const answers = this._shuffle(q.l);
     this.answersEl.innerHTML = answers
       .map(a => `<button class="answer-btn">${a}</button>`)
       .join('');
   }
 
-  /**
-   * Zeigt Feedback (grün für korrekt, rot für falsch).
-   * @param {boolean} correct
-   */
-  showResult(correct) {
-    this.quizSection.classList.add(correct ? 'correct' : 'wrong');
-    setTimeout(() => this.quizSection.classList.remove('correct', 'wrong'), 500);
+  /** Remote-Frage anzeigen */
+  showQuestionRemote(q) {
+    this.qEl.textContent = q.text;
+    const answers = this._shuffle(q.options);
+    this.answersEl.innerHTML = answers
+      .map(a => `<button class="answer-btn">${a}</button>`)
+      .join('');
   }
 
-  /**
-   * Aktualisiert die Progressbar-Breite.
-   * @param {{current: number, total: number}} progress
-   */
+  showResult(correct, answerText) {
+  const buttons = this.answersEl.querySelectorAll('.answer-btn');
+  buttons.forEach(btn => {
+    btn.disabled = true;
+    if (btn.textContent === answerText) {
+      btn.classList.add(correct ? 'correct' : 'wrong');
+      setTimeout(() => btn.classList.remove('correct', 'wrong'), 800);
+    }
+  });
+}
+
+  /** Fortschrittsbalken aktualisieren */
   updateProgress({ current, total }) {
     this.progressEl.style.width = `${(current / total) * 100}%`;
   }
 
-  /**
-   * Zeigt das Ende des Quiz und die Statistik.
-   * @param {number} score - Anzahl richtiger Antworten
-   * @param {number} total - Gesamtzahl der Fragen
-   */
+  /** Zusammenfassung anzeigen */
   showSummary(score, total) {
-    this.quizSection.innerHTML = `
+    this.catSection.classList.add('hidden');
+    this.quizSection.classList.add('hidden');
+    this.summarySection.classList.remove('hidden');
+    this.summaryContent.innerHTML = `
       <h2>Quiz beendet</h2>
       <p>Du hast ${score} von ${total} richtig beantwortet.</p>
     `;
   }
 
-  /**
-   * Hilfsfunktion: mischt ein Array zufällig.
-   */
+  /** Hilfsfunktion zum Mischen */
   _shuffle(arr) {
     return arr
       .map(v => [Math.random(), v])
@@ -97,4 +106,5 @@ export class QuizView {
       .map(v => v[1]);
   }
 }
+
 
