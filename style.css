@@ -1,122 +1,157 @@
-/* 1. Variablen für Farben & Abstände */
-:root {
-  --primary: #2a9d8f;
-  --spacing: 1rem;
-  --font-base: 16px;
+.hidden {
+  display: none !important;
 }
 
-/* 2. Globales Reset & Basis-Typografie */
-* {
+/* ------------ Globales Reset ------------ */
+html, body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #0a2342;      /* Dunkelblauer Hintergrund */
+  color: #fff;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+*, *::before, *::after {
   box-sizing: border-box;
 }
-body {
-  font-family: sans-serif;
-  font-size: var(--font-base);
-  line-height: 1.5;
-  background: #fafafa;
-  color: #333;
-}
 
-/* 3. Container für zentrierten Inhalt */
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: var(--spacing);
-}
-
-/* 4. Header & Footer */
-.site-header,
-.site-footer {
-  background-color: var(--primary);
+/* ------------ Kopf- und Fußbereich ------------ */
+.site-header, .site-footer {
+  width: 100%;
+  margin: 0;
+  padding: 1rem;
+  background-color: #102e4a; /* Etwas helleres Dunkelblau */
   color: #fff;
   text-align: center;
-  padding: var(--spacing);
+  letter-spacing: 1px;
 }
 
-/* 5. Flex-Utilities */
+/* ------------ Haupt-Container ------------ */
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem 1rem;
+  background: #fff;
+  color: #0a2342;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(10,35,66,0.08);
+}
+
+/* ------------ Flex-Klassen mit Umbruch ------------ */
 .flex {
   display: flex;
+  width: 100%;
 }
 .flex--center {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 }
 
-/* 6. Progressbar-Komponente */
-.progressbar {
-  background: #e0e0e0;
-  border-radius: 4px;
-  overflow: hidden;
-  height: 1rem;
-  margin-top: var(--spacing);
-}
-.progressbar__fill {
-  background: var(--primary);
-  width: 0;
-  height: 100%;
-  transition: width 0.3s ease;
-}
-
-/* 7. Antwort-Buttons */
-button.answer-btn {
-  background: var(--primary);
+/* ------------ Kategorie- und Antwort-Buttons ------------ */
+.category-btn,
+.answer-btn {
+  flex: 1 1 40%;
+  margin: 0.5rem;
+  padding: 1rem 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  min-width: 120px;
+  background: #0a2342;
   color: #fff;
   border: none;
-  padding: 0.5em 1em;
-  margin: 0.5em;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(10,35,66,0.07);
+  transition: background 0.2s, transform 0.1s;
 }
-button.answer-btn:hover {
-  opacity: 0.9;
-}
-
-/* 8. Fortschritts-Feedback (richtig/falsch) */
-.correct {
-  background-color: #d4edda;
-}
-.wrong {
-  background-color: #f8d7da;
+.category-btn:hover,
+.answer-btn:hover {
+  background: #1976d2; /* Kräftiges Blau beim Hover */
+  color: #fff;
+  transform: translateY(-2px) scale(1.03);
 }
 
-/* 9. Quiz-Frage */
+/* ------------ Quiz-Bereich ------------ */
+#quiz {
+  width: 100%;
+  margin: 0;
+  padding: 1rem 0.5rem;
+}
 .quiz-question {
   font-size: 1.25rem;
-  margin-bottom: var(--spacing);
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #0a2342;
+  font-weight: 600;
 }
-
-/* 10. Kategorie-Buttons */
-button.category-btn {
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  padding: 0.75em 1.5em;
-  margin: 0.5em;
-  font-size: 1rem;
+.progressbar {
+  width: 100%;
+  height: 0.5rem;
+  background-color: #e0e0e0;
+  margin-top: 1.5rem;
   border-radius: 4px;
-  cursor: pointer;
+  overflow: hidden;
 }
-button.category-btn:hover {
-  opacity: 0.9;
-}
-
-/* 11. Verstecken per Klasse */
-.hidden {
-  display: none;
+.progressbar__fill {
+  width: 0;
+  height: 100%;
+  background-color: #1976d2; /* Kräftiges Blau */
+  transition: width 0.3s;
 }
 
-/* 12. Responsive Anpassung */
+/* ------------ Ergebnisfarben ------------ */
+.correct {
+  background-color: #43a047 !important; /* Grün */
+  color: #fff !important;
+  transition: background 0.3s;
+}
+.wrong {
+  background-color: #d32f2f !important; /* Rot */
+  color: #fff !important;
+  transition: background 0.3s;
+}
+
+/* ------------ Responsive Anpassungen ------------ */
 @media (max-width: 600px) {
-  .container {
+  .container, #quiz {
+    max-width: 100%;
     padding: 0.5rem;
+  }
+  .category-btn,
+  .answer-btn {
+    flex: 1 1 48%;
+    font-size: 0.95rem;
+    padding: 0.85rem 0.5rem;
+    margin: 0.4rem;
+  }
+  .quiz-question {
+    font-size: 1.15rem;
+    margin-bottom: 0.9rem;
+  }
+  .progressbar {
+    height: 0.45rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container, #quiz {
+    padding: 0.3rem;
+  }
+  .category-btn,
+  .answer-btn {
+    flex: 1 1 100%;
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+    padding: 0.75rem 0.5rem;
   }
   .quiz-question {
     font-size: 1.1rem;
+    margin-bottom: 0.75rem;
   }
-  button.answer-btn,
-  button.category-btn {
-    flex: 1 1 100%;
+  .progressbar {
+    height: 0.4rem;
   }
 }
