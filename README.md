@@ -1,40 +1,62 @@
-# Lernprogramm
+# Webbasiertes Lernprogramm (PWA)
 
-## Projektbeschreibung
-Ein webbasiertes Quiz-Lernprogramm, umgesetzt als Progressive Web App (PWA) mit Model-View-Presenter-Architektur. Nutzer können Fragen aus verschiedenen Kategorien beantworten und ihren Fortschritt sehen.
-
----
-
-## Entwicklungsfortschritte
-
-**Stand: 28.05.–02.06.**
-- Zunächst das HTML-Gerüst mit dem Button „Mathe“ implementiert.
-- Mit CSS die Oberfläche und Buttons gestaltet.
-- Die JavaScript-Programmstruktur nach dem Model-View-Presenter-Prinzip erstellt.
-- Funktionen zum Laden der Aufgaben und zur Übergabe der gewählten Lösung implementiert.
-- In der Datei `fragen2.json` im Verzeichnis `data` sind zunächst Fragen zu Mathe enthalten.
-- Lernprogramm auf dem HTW-Server abgelegt und getestet: Fragen können über den Button „Mathe“ abgerufen werden.
-
-**Stand: 03.06.**
-- Erweiterung um zwei weitere Buttons „Web“ und „Allgemein“.
-- Hinzufügen von Fragen und Antworten in der `fragen.json`-Datei.
-- **Problem:** Beim Ausführen der neuen Buttons wurden keine Fragen gefunden, obwohl die Datei mehrfach per hartem Reset neu geladen wurde.
-- **Lösung:** Erst nachdem ich die Datei umbenannt und den Link in der Klasse `model` angepasst habe, funktionierte die Auswahl über die Buttons.
+Dieses Projekt ist ein webbasiertes Lernprogramm als Progressive Web App (PWA). Ziel war es, die im Kurs "Internettechnologien" erlernten Techniken praktisch anzuwenden und eine interaktive Quiz-App zu realisieren.
 
 ---
 
-## Probleme & Lösungen
+## Implementierte Funktionen
 
-- **Problem:** Kategorien „Web“ und „Allgemein“ wurden nicht angezeigt.
-  - **Ursache:** Alte Version der Fragen-Datei wurde vom Server oder Browser gecacht.
-  - **Lösung:** Datei umbenannt und Pfad im Code angepasst, danach funktionierte alles wie gewünscht.
+1. **Aufgabenkategorien**
+  - **Lokal gespeicherte Kategorien**:
+    - "Allgemein" (z.B Geschichte, Allgemeinwissen)
+    - "Mathe" (Mathematikaufgaben, gerendert als Text)
+    - "Web" (Fragen zu HTTP, REST, Protokollen)
+  - **Remote-Kategorie**:
+    - Laden von Fragen & Überprüfung via AJAX/REST-API (Web-Quiz-Server)
+    - Dynamisches Nachladen von Aufgaben 
 
----
+2. **Quiz-Mechanik** 
+  - Zufällige Auswahl einer Aufgabe und Mischen der vier Antwortoptionen 
+  - Fortschrittanzeige mittels Progessbar nach jeder Antwort
+  (- Ergebnis-Feedback: kurzzeitig grüne oder rote Einfärbung des Quiz-Containers) hat Stand jetzt nicht funktioniert
+  - Zusammenfassende Statistik am Ende: "x von y richtig"
 
-## Nächste Schritte
+3. **PWA-Grundlage**
+  - **Manifest** mit App-Namen, Icons und Start-URL
+  - **Service Worker** für Caching aller statistischen Ressourcen und Offline-Betrieb
+  - Installation der Webapp auf Desktop und Mobilen Geräten
 
-- Einbindung externer Quiz-Aufgaben über den Server.
-- Weitere optische Verbesserungen und Animationen.
-- Implementierung von Service Worker und Manifest für vollständige PWA-Funktionalität.
+4. **Responsives Design**
+  - Anpassung an verschiedene Bilschirmgrößen (Desktop, Smartphone)
+  - Flexibles Grid-Layout für Kategorie- und Antwort-Buttons
+  - Media-Queries für kompaktere Darstellung auf kleinen Displays
 
----
+5. **Technische Details** 
+  - **HTML5/CSS3/ES6+** im strikten Modus ("use strict")
+  - **Model-View-Presenter**-Architektur
+  - JSON-Datenformat lokal und serverseitig
+  - AJAX mit 'fetch()'
+
+
+  ---
+
+  ## Probleme und Herausforderungen
+
+  1. **Shuffle vs. erkennung der richtigen Antwort**
+  - Beim Mischen der Antwort-Buttons war das Erkennen der korrekten Option schwierig.
+  - Abhilfe durch explizites Zwischenspeichern der aktuellen Frage im Presenter un Vergleiche mit dem ersten Eintrag im Array.
+
+ 2. **Service Worker Caching**
+ - Beim Entwickeln führte aggressive Cache-Nutzung immer wieder dazu, dass neue Skripte nicht geladen wurden.
+ - Gefixt durch Versionierung des Cache-Names und sauberes Invaliedieren alter Caches.
+
+ 3. **Responsive Progressbar**m
+ - Die Progressbar hatte auf schmalen Bildschirmen ein Pixel-Stottern.
+ - Mit 'transition: width 0.3s' und flexiblen Einheiten (Prozenten)  glättete sich die Animation.
+
+ 4.**Remote-API Interaktion**
+ - Unterschiedliche JSON-Formate lokal vs. remote erforderten bedingte Presenter-Logik ('isRemote'-Flag).
+ - Ausgiebiges Logging ('console.log') half, Inkonsistenzen schnell zu erkennen.
+
+ ---
+
