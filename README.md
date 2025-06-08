@@ -35,8 +35,16 @@ Dieses Projekt ist ein webbasiertes Lernprogramm als Progressive Web App (PWA). 
   - **HTML5/CSS3/ES6+** im strikten Modus ("use strict")
   - **Model-View-Presenter**-Architektur
   - JSON-Datenformat lokal und serverseitig
-  - AJAX mit 'fetch()'
-
+  - AJAX mit **XMLHttpRequest** (Eigenbau-Helper `_xhrGet` und `_xhrPost`)  
+  - Basic-Auth-Header für Remote-API  
+  - Modulares JavaScript (ES Modules)  
+  - Keine externen Frameworks (jQuery, Bootstrap o. Ä.)
+  
+6. **Genutzte Hilfsmittel**  
+   - **ChatGPT (OpenAI, GPT-4, Juni 2025)**  
+     Prompt-basiertes Refactoring, Debugging-Hinweise und Teile der Dokumentation generiert.  
+   - **GitHub Copilot (v1.85.0)**  
+     Code-Vervollständigungen, Boilerplate-Generierung und Vorschläge im Editor.
 
   ---
 
@@ -56,7 +64,13 @@ Dieses Projekt ist ein webbasiertes Lernprogramm als Progressive Web App (PWA). 
 
  4.**Remote-API Interaktion**
  - Unterschiedliche JSON-Formate lokal vs. remote erforderten bedingte Presenter-Logik ('isRemote'-Flag).
- - Ausgiebiges Logging ('console.log') half, Inkonsistenzen schnell zu erkennen.
+
+ ## Ausblick 
+
+ - **Notenlernen**-Kategorie mit VexFlow-Notation, virtuellem Keyboard und Web Audio API.
+ - Integration weiterer JS-Bibliotheken (z.B. KaTeX für Formeln).
+
+ -> zeitlich leider nicht weitergekommen
 
  ---
 
